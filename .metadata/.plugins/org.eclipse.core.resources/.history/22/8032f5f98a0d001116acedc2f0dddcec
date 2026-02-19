@@ -1,0 +1,7 @@
+package com.cherry.manager.controller;
+
+public class HomeController {
+	public String healthCheck() {
+		return "OK";
+	}
+}

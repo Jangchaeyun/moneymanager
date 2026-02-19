@@ -1,0 +1,5 @@
+package com.cherry.manager.entity;
+
+public class ProfileEntity {
+
+}

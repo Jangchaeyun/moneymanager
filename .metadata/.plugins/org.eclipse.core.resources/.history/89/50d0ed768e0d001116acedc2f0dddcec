@@ -1,0 +1,10 @@
+package com.cherry.manager.entity;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "tbl_profiles")
+public class ProfileEntity {
+
+}

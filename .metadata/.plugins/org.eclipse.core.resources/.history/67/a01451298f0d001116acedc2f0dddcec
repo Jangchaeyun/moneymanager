@@ -1,0 +1,16 @@
+package com.cherry.manager.entity;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Entity
+@Table(name = "tbl_profiles")
+@Data
+@NoArgsConstructor
+@Builder
+public class ProfileEntity {
+	
+}
