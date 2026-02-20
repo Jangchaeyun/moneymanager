@@ -1,0 +1,5 @@
+package com.cherry.manager.repository;
+
+public interface ProfileRepository {
+
+}

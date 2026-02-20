@@ -1,0 +1,19 @@
+package com.cherry.manager.service;
+
+import org.springframework.stereotype.Service;
+
+import com.cherry.manager.dto.ProfileDTO;
+import com.cherry.manager.entity.ProfileEntity;
+import com.cherry.manager.repository.ProfileRepository;
+
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+public class ProfileService {
+	private final ProfileRepository profileRepository;
+	
+	public ProfileDTO registerProfile(ProfileDTO profileDTO) {
+		return profileDTO;
+	}
+}

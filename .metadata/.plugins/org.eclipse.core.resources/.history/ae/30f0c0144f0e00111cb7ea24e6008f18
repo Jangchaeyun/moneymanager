@@ -1,0 +1,5 @@
+package com.cherry.manager.dto;
+
+public class ProfileDTO {
+
+}

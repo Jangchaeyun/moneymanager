@@ -19,8 +19,8 @@ org.eclipse.mylyn.wikitext.ui.presentation.textFont=1|Fira Code|14.0|0|WINDOWS|1
 org.eclipse.pde.internal.ui.compare.ManifestContentMergeViewer=1|Fira Code|14.0|0|WINDOWS|1|-19|0|0|0|400|0|0|0|0|3|2|1|49|Fira Code;
 org.eclipse.pde.internal.ui.compare.PluginContentMergeViewer=1|Fira Code|14.0|0|WINDOWS|1|-19|0|0|0|400|0|0|0|0|3|2|1|49|Fira Code;
 org.eclipse.ui.commands=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<org.eclipse.ui.commands/>
-org.eclipse.ui.workbench.ACTIVE_NOFOCUS_TAB_BG_START=37,41,45
-org.eclipse.ui.workbench.ACTIVE_TAB_BG_START=37,41,45
-org.eclipse.ui.workbench.INACTIVE_TAB_BG_START=53,60,65
+org.eclipse.ui.workbench.ACTIVE_NOFOCUS_TAB_BG_START=232,232,232
+org.eclipse.ui.workbench.ACTIVE_TAB_BG_START=232,232,232
+org.eclipse.ui.workbench.INACTIVE_TAB_BG_START=219,219,219
 org.eclipse.wst.sse.ui.textfont=1|Fira Code|14.0|0|WINDOWS|1|-19|0|0|0|400|0|0|0|0|3|2|1|49|Fira Code;
 terminal.views.view.font.definition=1|Fira Code|14.0|0|WINDOWS|1|-19|0|0|0|400|0|0|0|0|3|2|1|49|Fira Code;

@@ -1,0 +1,13 @@
+package com.cherry.manager.service;
+
+import org.springframework.stereotype.Service;
+
+import com.cherry.manager.repository.ProfileRepository;
+
+@Service
+public class ProfileService {
+	
+	private final ProfileRepository profileRepository;
+	
+	
+}
