@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
+import com.cherry.manager.controller.ExpenseController;
 import com.cherry.manager.dto.ExpenseDTO;
 import com.cherry.manager.entity.CategoryEntity;
 import com.cherry.manager.entity.ExpenseEntity;
@@ -19,6 +19,8 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class ExpenseService {
+
+    private final ExpenseController expenseController;
 	private final CategoryService categoryService;
 	private final ExpenseRepository expenseRepository;
 	private final ProfileService profileService;
@@ -69,6 +71,11 @@ public class ExpenseService {
 	public List<ExpenseDTO> filterExpenses(LocalDate startDate, LocalDate endDate, String keyword, Sort sort) {
 		ProfileEntity profile = profileService.getCurrentProfile();
 		List<ExpenseEntity> list = expenseRepository.findByProfileIdAndDateBetweenAndNameContainingIgnoreCase(profile. getId(), startDate, endDate, keyword, sort);
+		return list.stream().map(this::toDTO).toList();
+	}
+	
+	public List<ExpenseDTO> getExpensesForUserOnDate(Long profileId, LocalDate date) {
+		List<ExpenseEntity> list = expenseRepository.findByProfileIdAndDate(profileId, date);
 		return list.stream().map(this::toDTO).toList();
 	}
 	
