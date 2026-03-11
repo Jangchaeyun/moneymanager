@@ -3,6 +3,7 @@ package com.cherry.manager.service;
 import java.util.Map;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -27,6 +28,9 @@ public class ProfileService {
 	private final PasswordEncoder passwordEncoder;
 	private final AuthenticationManager authenticationManager;
 	private final JwtUtil jwtUtil;
+	
+	@Value("${app.activation.url}")
+	private String activationURL;
 	
 	public ProfileDTO registerProfile(ProfileDTO profileDTO) {
 		ProfileEntity newProfile = toEntity(profileDTO);
