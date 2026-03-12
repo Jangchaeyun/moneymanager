@@ -36,9 +36,9 @@ public class ProfileService {
 		ProfileEntity newProfile = toEntity(profileDTO);
 		newProfile.setActivationToken(UUID.randomUUID().toString());
 		newProfile = profileRepository.save(newProfile);
-		String activateionLink = "http://localhost:8080/api/v1.0/activate?token=" + newProfile.getActivationToken();
+		String activationLink = activationURL + "/api/v1.0/activate?token=" + newProfile.getActivationToken();
 		String subject = "Money Manager 계정을 활성화하세요";
-		String body = "다음 링크를 클릭하여 계정을 활성화하세요: " + activateionLink;
+		String body = "다음 링크를 클릭하여 계정을 활성화하세요: " + activationLink;
 		emailService.sendEmail(newProfile.getEmail(), subject, body);
 		
 		return toDTO(newProfile);
