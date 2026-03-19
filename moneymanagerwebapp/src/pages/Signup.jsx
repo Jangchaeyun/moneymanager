@@ -2,14 +2,63 @@ import { Link, useNavigate } from "react-router-dom";
 import { assets } from "../assets/assets";
 import { useState } from "react";
 import Input from "../components/input";
+import { validateEmail } from "../util/validation";
+import axiosConfing from "../util/axiosConfig";
+import { API_ENDPOINTS } from "../util/apiEndPoints";
+import toast from "react-hot-toast";
+import { LoaderCircle } from "lucide-react";
 
 const Signup = () => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    if (!fullName.trim()) {
+      setError("이름을 입력해 주세요.");
+      setIsLoading(false);
+      return;
+    }
+
+    if (!password.trim()) {
+      setError("비밀번호를 입력해 주세요.");
+      setIsLoading(false);
+      return;
+    }
+
+    if (!validateEmail(email)) {
+      setError("이메일을 입력해 주세요.");
+      setIsLoading(false);
+      return;
+    }
+
+    setError("");
+
+    try {
+      const response = await axiosConfing.post(API_ENDPOINTS.REGISTER, {
+        fullName,
+        email,
+        password,
+      });
+      if (response.status === 201) {
+        toast.success("회원가입이 성공적으로 완료되었습니다.");
+        navigate("/login");
+      }
+    } catch (err) {
+      console.error("Something went wrong", err);
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="h-screen w-full relative flex items-center justify-center overflow-hidden">
       <img
@@ -25,7 +74,7 @@ const Signup = () => {
           <p className="text-sm text-slate-700 text-center mb-8">
             저희와 함께 지출 내역을 추적해 보세요.
           </p>
-          <form className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div className="flex justify-center mb-6"></div>
             <div className="grid grid-cols-2 md:grid-cols-2 gap-4">
               <Input
@@ -60,10 +109,18 @@ const Signup = () => {
             )}
 
             <button
-              className="btn-primary w-full py-3 text-lg font-medium"
+              disabled={isLoading}
+              className={`btn-primary w-full py-3 text-lg font-medium flex items-center justify-center gap-2 ${isLoading ? "opacity-60 cursor-not-allowed" : ""}`}
               type="submit"
             >
-              회원 가입
+              {isLoading ? (
+                <>
+                  <LoaderCircle className="animate-spin w-5 h-5" />
+                  회원가입 중...
+                </>
+              ) : (
+                <>회원가입</>
+              )}
             </button>
 
             <p className="text-sm text-slate-800 text-center mt-6">

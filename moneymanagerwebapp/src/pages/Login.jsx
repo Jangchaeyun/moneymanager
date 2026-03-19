@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { assets } from "../assets/assets";
 import Input from "../components/input";
+import { validateEmail } from "../util/validation";
 
 const Login = () => {
   const [fullName, setFullName] = useState("");
@@ -10,6 +11,28 @@ const Login = () => {
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!fullName.trim()) {
+      setError("이름을 입력해 주세요.");
+      return;
+    }
+
+    if (!password.trim()) {
+      setError("비밀번호를 입력해 주세요.");
+      return;
+    }
+
+    if (!validateEmail(email)) {
+      setError("이메일을 입력해 주세요.");
+      return;
+    }
+
+    console.log(fullName, email, password);
+  };
+
   return (
     <div className="h-screen w-full relative flex items-center justify-center overflow-hidden">
       <img
@@ -20,10 +43,10 @@ const Login = () => {
       <div className="relative z-10 w-full max-w-lg px-6">
         <div className="bg-white bg-opacity-95 backdrop-blur-sm rounded-lg shadow-2xl p-8 max-h-[90vh] overflow-y-auto">
           <h3 className="text-2xl font-semibold text-black text-center mb-2">
-            로그인
+            다시 오신 것을 환영합니다
           </h3>
           <p className="text-sm text-slate-700 text-center mb-8">
-            저희와 함께 지출 내역을 추적해 보세요.
+            로그인하려면 정보를 입력하세요.
           </p>
           <form className="space-y-4">
             <Input
@@ -53,13 +76,13 @@ const Login = () => {
               className="btn-primary w-full py-3 text-lg font-medium"
               type="submit"
             >
-              회원 가입
+              로그인
             </button>
 
             <p className="text-sm text-slate-800 text-center mt-6">
-              이미 계정이 없으신가요?{" "}
+              아직 계정이 없으신가요?{" "}
               <Link
-                to="/register"
+                to="/signup"
                 className="font-medium text-primary underline hover:text-primary-dark transition-colors"
               >
                 회원가입
