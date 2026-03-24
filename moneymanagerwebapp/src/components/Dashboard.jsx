@@ -1,22 +1,17 @@
-import React, { useContext } from "react";
 import Menubar from "./Menubar";
-import { AppContext } from "../context/AppContext";
 import Sidebar from "./Sidebar";
 
-const Dashboard = () => {
-  const { user } = useContext(AppContext);
+const Dashboard = ({ children, activeMenu }) => {
   return (
     <div>
-      <Menubar />
+      <Menubar activeMenu={activeMenu} />
 
-      {user && (
-        <div className="flex">
-          <div className="max-[1080px]:hidden">
-            <Sidebar />
-          </div>
-          <div className="grow mx-5">Ride side</div>
+      <div className="flex">
+        <div className="max-[1080px]:hidden">
+          <Sidebar activeMenu={activeMenu} />
         </div>
-      )}
+        <div className="grow mx-5">{children}</div>
+      </div>
     </div>
   );
 };

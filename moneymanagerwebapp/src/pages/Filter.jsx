@@ -1,5 +1,7 @@
+import Dashboard from "../components/Dashboard";
+
 const Filter = () => {
-  return <div>필터</div>;
+  return <Dashboard activeMenu="필터">This is Filter page</Dashboard>;
 };
 
 export default Filter;
