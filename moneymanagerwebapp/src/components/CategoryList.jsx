@@ -43,7 +43,12 @@ const CategoryList = ({ categories, onEditCategory, onDeleteCategory }) => {
                     {category.type}
                   </p>
                 </div>
-                
+
+                <div className="flex items-center gap-2">
+                  <button className="text-gray-400 hover:text-blue-500 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
+                    <Pencil size={18} />
+                  </button>
+                </div>
               </div>
             </div>
           ))}

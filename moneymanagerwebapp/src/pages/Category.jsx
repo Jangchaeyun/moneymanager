@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import axiosConfig from "../util/axiosConfig";
 import { API_ENDPOINTS } from "../util/apiEndPoints";
 import toast from "react-hot-toast";
+import Modal from "../components/Modal";
+import AddCategoryForm from "../components/AddCategoryForm";
 
 const Category = () => {
   useUser();
@@ -43,12 +45,23 @@ const Category = () => {
       <div className="my-5 mx-auto">
         <div className="flex justify-between items-center mb-5">
           <h2 className="text-2xl font-semibold">모든 카테고리</h2>
-          <button className="add-btn flex items-center gap-1">
+          <button
+            onClick={() => setOpenAddCategoryModal(true)}
+            className="add-btn flex items-center gap-1"
+          >
             <Plus size={15} />
             카테고리 추가
           </button>
         </div>
         <CategoryList categories={categoryData} />
+
+        <Modal
+          isOpen={openAddCategoryModal}
+          onClose={() => setOpenAddCategoryModal(false)}
+          title="카테고리 추가"
+        >
+          <AddCategoryForm />
+        </Modal>
       </div>
     </Dashboard>
   );
