@@ -1,22 +1,40 @@
 import React, { useState } from "react";
 import Input from "./input";
+import EmojiPickerPopup from "./EmojiPickerPopup";
+import { LoaderCircle } from "lucide-react";
 
-const AddCategoryForm = () => {
+const AddCategoryForm = ({ onAddCategory }) => {
   const [category, setCategory] = useState({
     name: "",
-    type: "income",
+    type: "소득",
     icon: "",
   });
   const categoryTypeOptions = [
-    { value: "income", label: "소득" },
-    { value: "expense", label: "비용" },
+    { value: "소득", label: "소득" },
+    { value: "비용", label: "비용" },
   ];
+
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (key, value) => {
     setCategory({ ...category, [key]: value });
   };
+
+  const handleSubmit = async () => {
+    setLoading(true);
+    try {
+      await onAddCategory(category);
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <div className="p-4">
+      <EmojiPickerPopup
+        icon={category.icon}
+        onSelect={(selectedIcon) => handleChange("icon", selectedIcon)}
+      />
+
       <Input
         value={category.name}
         onChange={({ target }) => handleChange("name", target.value)}
@@ -32,6 +50,24 @@ const AddCategoryForm = () => {
         isSelect={true}
         options={categoryTypeOptions}
       />
+
+      <div className="flex justify-end mt-6">
+        <button
+          type="button"
+          onClick={handleSubmit}
+          disabled={loading}
+          className="add-btn add-btn-fill"
+        >
+          {loading ? (
+            <>
+              <LoaderCircle className="w-4 h-4 animate-spin" />
+              추가 중...
+            </>
+          ) : (
+            <>카테고리 추가</>
+          )}
+        </button>
+      </div>
     </div>
   );
 };

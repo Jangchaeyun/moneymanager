@@ -40,6 +40,33 @@ const Category = () => {
     fetchCategoryDetails();
   }, []);
 
+  const handleAddCategory = async (category) => {
+    const { name, type, icon } = category;
+
+    if (!name.trim()) {
+      toast.error("카테고리 이름은 필수 입력 사항입니다.");
+      return;
+    }
+
+    try {
+      const response = await axiosConfig.post(API_ENDPOINTS.ADD_CATEGORY, {
+        name,
+        type,
+        icon,
+      });
+      if (response.status === 200) {
+        toast.success("카테고리가 성공적으로 추가되었습니다.");
+        setOpenAddCategoryModal(false);
+        fetchCategoryDetails();
+      }
+    } catch (error) {
+      console.error("카테고리 추가 중 오류 발생: ", error);
+      toast.error(
+        error.response?.data?.message || "카테고리를 추가하는 데 실패했습니다.",
+      );
+    }
+  };
+
   return (
     <Dashboard activeMenu="카테고리">
       <div className="my-5 mx-auto">
@@ -60,7 +87,7 @@ const Category = () => {
           onClose={() => setOpenAddCategoryModal(false)}
           title="카테고리 추가"
         >
-          <AddCategoryForm />
+          <AddCategoryForm onAddCategory={handleAddCategory} />
         </Modal>
       </div>
     </Dashboard>
