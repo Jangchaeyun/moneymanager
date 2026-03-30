@@ -48,6 +48,15 @@ const Category = () => {
       return;
     }
 
+    const isDuplicate = categoryData.same((item) => {
+      category.name.toLowerCase() === name.trim().toLowerCase();
+    });
+
+    if (isDuplicate) {
+      toast.error("카테고리 이름이 이미 존재합니다.");
+      return;
+    }
+
     try {
       const response = await axiosConfig.post(API_ENDPOINTS.ADD_CATEGORY, {
         name,
@@ -67,6 +76,15 @@ const Category = () => {
     }
   };
 
+  const handleEditCategory = (categoryToEdit) => {
+    setSelectedCategory(categoryToEdit);
+    setOpenEditCategoryModal(true);
+  };
+
+  const handleUpdateCategory = (updatedCategory) => {
+    console.log("Updating the category", updatedCategory);
+  };
+
   return (
     <Dashboard activeMenu="카테고리">
       <div className="my-5 mx-auto">
@@ -80,7 +98,10 @@ const Category = () => {
             카테고리 추가
           </button>
         </div>
-        <CategoryList categories={categoryData} />
+        <CategoryList
+          categories={categoryData}
+          onEditCategory={handleEditCategory}
+        />
 
         <Modal
           isOpen={openAddCategoryModal}
@@ -88,6 +109,21 @@ const Category = () => {
           title="카테고리 추가"
         >
           <AddCategoryForm onAddCategory={handleAddCategory} />
+        </Modal>
+
+        <Modal
+          isOpen={openEditCategoryModal}
+          onClose={() => {
+            setOpenEditCategoryModal(false);
+            setSelectedCategory(null);
+          }}
+          title="카테고리 업데이트"
+        >
+          <AddCategoryForm
+            initialCategoryData={selectedCategory}
+            onAddCategory={handleUpdateCategory}
+            isEditing={true}
+          />
         </Modal>
       </div>
     </Dashboard>

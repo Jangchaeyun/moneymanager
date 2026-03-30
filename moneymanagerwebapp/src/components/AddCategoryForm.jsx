@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Input from "./input";
 import EmojiPickerPopup from "./EmojiPickerPopup";
 import { LoaderCircle } from "lucide-react";
 
-const AddCategoryForm = ({ onAddCategory }) => {
+const AddCategoryForm = ({ onAddCategory, initialCategoryData, isEditing }) => {
   const [category, setCategory] = useState({
     name: "",
     type: "소득",
@@ -15,6 +15,14 @@ const AddCategoryForm = ({ onAddCategory }) => {
   ];
 
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (isEditing && initialCategoryData) {
+      setCategory(initialCategoryData);
+    } else {
+      setCategory({ name: "", type: "소득", icon: "" });
+    }
+  }, [isEditing, initialCategoryData]);
 
   const handleChange = (key, value) => {
     setCategory({ ...category, [key]: value });
@@ -61,10 +69,10 @@ const AddCategoryForm = ({ onAddCategory }) => {
           {loading ? (
             <>
               <LoaderCircle className="w-4 h-4 animate-spin" />
-              추가 중...
+              {isEditing ? "업데이트 중..." : "추가 중..."}
             </>
           ) : (
-            <>카테고리 추가</>
+            <>{isEditing ? "카테고리 업데이트" : "카테고리 추가"}</>
           )}
         </button>
       </div>
