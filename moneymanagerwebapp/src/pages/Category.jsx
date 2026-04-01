@@ -48,7 +48,7 @@ const Category = () => {
       return;
     }
 
-    const isDuplicate = categoryData.same((item) => {
+    const isDuplicate = categoryData.some((category) => {
       category.name.toLowerCase() === name.trim().toLowerCase();
     });
 
@@ -63,7 +63,7 @@ const Category = () => {
         type,
         icon,
       });
-      if (response.status === 200) {
+      if (response.status === 201) {
         toast.success("카테고리가 성공적으로 추가되었습니다.");
         setOpenAddCategoryModal(false);
         fetchCategoryDetails();
@@ -81,8 +81,36 @@ const Category = () => {
     setOpenEditCategoryModal(true);
   };
 
-  const handleUpdateCategory = (updatedCategory) => {
-    console.log("Updating the category", updatedCategory);
+  const handleUpdateCategory = async (updatedCategory) => {
+    const { id, name, type, icon } = updatedCategory;
+    if (!name.trim()) {
+      toast.error("카테고리 이름은 필수 입력 사항입니다.");
+      return;
+    }
+
+    if (!id) {
+      toast.error("업데이트에 필요한 카테고리 ID가 누락되었습니다.");
+      return;
+    }
+
+    try {
+      const response = await axiosConfig.put(
+        API_ENDPOINTS.UPDATE_CATEOGRY(id),
+        { name, type, icon },
+      );
+      setOpenEditCategoryModal(false);
+      setSelectedCategory(null);
+      toast.success("카테고리가 성공적으로 업데이트되었습니다.");
+      fetchCategoryDetails();
+    } catch (error) {
+      console.error(
+        "카테고리 업데이트 오류:",
+        error.response?.data?.message || error.message,
+      );
+      toast.error(
+        error.response?.data?.message || "카테고리 업데이트에 실패했습니다.",
+      );
+    }
   };
 
   return (
