@@ -10,6 +10,7 @@ const AddIncome = ({ onAddIncome, categories }) => {
     icon: "",
     categoryId: "",
   });
+  const [loading, setLoading] = useState(false);
 
   const categoryOptions = categories.map((category) => ({
     value: category.id,
@@ -18,6 +19,15 @@ const AddIncome = ({ onAddIncome, categories }) => {
 
   const handleChange = (key, value) => {
     setIncome({ ...income, [key]: value });
+  };
+
+  const handleAddIncome = async () => {
+    setLoading(true);
+    try {
+      await onAddIncome(income);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -56,10 +66,7 @@ const AddIncome = ({ onAddIncome, categories }) => {
       />
 
       <div className="flex justify-end mt-6">
-        <button
-          onClick={() => onAddIncome(income)}
-          className="add-btn add-btn-fill"
-        >
+        <button onClick={handleAddIncome} className="add-btn add-btn-fill">
           소득원 추가
         </button>
       </div>

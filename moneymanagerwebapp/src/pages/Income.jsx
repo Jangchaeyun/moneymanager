@@ -61,6 +61,54 @@ const Income = () => {
     }
   };
 
+  const handleAddIncome = async (income) => {
+    const { name, amount, date, icon, categoryId } = income;
+
+    if (!name.trim()) {
+      toast.error("이름을 입력해 주세요");
+      return;
+    }
+    if (!amount || isNaN(amount) || Number(amount) <= 0) {
+      toast.error("유효한 금액을 입력해 주세요");
+      return;
+    }
+    if (!date) {
+      toast.error("날짜를 선택해 주세요");
+      return;
+    }
+
+    const today = new Date().toISOString().split("T")[0];
+
+    if (date > today) {
+      toast.error("날짜는 미래일 수 없습니다.");
+      return;
+    }
+
+    if (!categoryId) {
+      toast.error("카테고리를 선택해 주세요");
+      return;
+    }
+
+    try {
+      const response = await axiosConfig.post(API_ENDPOINTS.ADD_INCOME, {
+        name,
+        amount: Number(amount),
+        date,
+        icon,
+        categoryId,
+      });
+      if (response.status === 201) {
+        setOpenAddIncomeModal(false);
+        toast.success("수입이 성공적으로 추가되었습니다.");
+        fetchIncomeDetails();
+        fetchIncomeCategories();
+      }
+    } catch (error) {
+      console.log("소득 추가 오류", error);
+      toast.error(error.response?.data?.message || "소득 추가에 실패했습니다");
+    }
+  };
+
   useEffect(() => {
     fetchIncomeDetails();
     fetchIncomeCategories();
@@ -89,7 +137,7 @@ const Income = () => {
             title="소득원 추가"
           >
             <AddIncome
-              onAddIncome={(income) => console.log("Add Income", income)}
+              onAddIncome={(income) => handleAddIncome(income)}
               categories={categories}
             />
           </Modal>
