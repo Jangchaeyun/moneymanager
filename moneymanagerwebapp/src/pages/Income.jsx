@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 import IncomeList from "../components/IncomeList";
 import Modal from "../components/Modal";
 import { Plus } from "lucide-react";
-import AddIncome from "../components/AddIncomeForm";
+import AddIncomeForm from "../components/AddIncomeForm";
 
 const Income = () => {
   useUser();
@@ -136,7 +136,7 @@ const Income = () => {
             onClose={() => setOpenAddIncomeModal(false)}
             title="소득원 추가"
           >
-            <AddIncome
+            <AddIncomeForm
               onAddIncome={(income) => handleAddIncome(income)}
               categories={categories}
             />
