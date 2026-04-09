@@ -3,18 +3,18 @@ import React from "react";
 import TransactionInfoCard from "./TransactionInfoCard";
 import moment from "moment";
 
-const IncomeList = ({ transactions, onDelete }) => {
+const IncomeList = ({ transactions, onDelete, onDownload, onEmail }) => {
   return (
     <div className="card">
       <div className="flex items-center justify-between">
         <h5 className="text-lg">소득원</h5>
         <div className="flex items-center justify-end gap-2">
           <button className="card-btn">
-            <Mail size={15} className="text-base" />
+            <Mail size={15} className="text-base" onClick={onEmail} />
             이메일
           </button>
           <button className="card-btn">
-            <Download size={15} className="text-base" />
+            <Download size={15} className="text-base" onClick={onDownload} />
             다운로드
           </button>
         </div>

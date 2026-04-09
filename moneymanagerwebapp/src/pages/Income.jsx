@@ -9,6 +9,7 @@ import Modal from "../components/Modal";
 import { Plus } from "lucide-react";
 import AddIncomeForm from "../components/AddIncomeForm";
 import DeleteAlert from "../components/DeleteAlert";
+import IncomeOverview from "../components/IncomeOverview";
 
 const Income = () => {
   useUser();
@@ -126,6 +127,14 @@ const Income = () => {
     }
   };
 
+  const handleDownloadIncomeDetails = () => {
+    console.log("Download income details");
+  };
+
+  const handleEmailIncomeDetails = () => {
+    console.log("Email income details");
+  };
+
   useEffect(() => {
     fetchIncomeDetails();
     fetchIncomeCategories();
@@ -142,10 +151,16 @@ const Income = () => {
             >
               <Plus size={15} className="text-lg" /> 소득원 추가
             </button>
+            <IncomeOverview
+              transactions={incomeData}
+              onAddIncome={() => setOpenAddIncomeModal(true)}
+            />
           </div>
           <IncomeList
             transactions={incomeData}
             onDelete={(id) => setOpenDeleteAlert({ show: true, data: id })}
+            onDownload={handleDownloadIncomeDetails}
+            onEmail={handleEmailIncomeDetails}
           />
 
           <Modal
