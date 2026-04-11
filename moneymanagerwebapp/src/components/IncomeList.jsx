@@ -31,7 +31,7 @@ const IncomeList = ({ transactions, onDelete, onDownload, onEmail }) => {
           <button disabled={loading} className="card-btn" onClick={handleEmail}>
             {loading ? (
               <>
-                <LoaderCircle className="w-4 h-4 animate-spin"/>
+                <LoaderCircle className="w-4 h-4 animate-spin" />
                 이메일 보내는 중...
               </>
             ) : (
@@ -46,8 +46,17 @@ const IncomeList = ({ transactions, onDelete, onDownload, onEmail }) => {
             className="card-btn"
             onClick={handleDownload}
           >
-            <Download size={15} className="text-base" />
-            다운로드
+            {loading ? (
+              <>
+                <LoaderCircle className="w-4 h-4 animate-spin" />
+                다운로드 중...
+              </>
+            ) : (
+              <>
+                <Download size={15} className="text-base" />
+                다운로드
+              </>
+            )}
           </button>
         </div>
       </div>

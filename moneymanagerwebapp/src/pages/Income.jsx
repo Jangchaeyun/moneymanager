@@ -176,12 +176,6 @@ const Income = () => {
       <div className="my-5 mx-auto">
         <div className="grid grid-cols-1 gap-6">
           <div>
-            <button
-              className="add-btn"
-              onClick={() => setOpenAddIncomeModal(true)}
-            >
-              <Plus size={15} className="text-lg" /> 소득원 추가
-            </button>
             <IncomeOverview
               transactions={incomeData}
               onAddIncome={() => setOpenAddIncomeModal(true)}
